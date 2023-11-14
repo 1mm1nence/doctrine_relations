@@ -13,28 +13,19 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        QuestionFactory::createMany(20);
+        $questions = QuestionFactory::createMany(20);
 
         QuestionFactory::new()
             ->unpublished()
             ->many(5)
             ->create()
         ;
-
-        // $answer = new Answer();
-        // $answer->setContent('This question is the best! I wish I knew the answer.');
-        // $answer->setUsername('weaveryyan');
-
-        // $question = new Question();
-        // $question->setName('How to un-dissapear your wallet.');
-        // $question->setQuestion('... I should not have done this...');
-
-        // $answer->setQuestion($question);
-
-        // $manager->persist($answer);
-        // $manager->persist($question);
         
-        AnswerFactory::createMany(100);
+        AnswerFactory::createMany(100, function() use ($questions) {
+            return [
+                'question' => $questions[array_rand($questions)],
+            ];
+        });
 
         $manager->flush();
     }
