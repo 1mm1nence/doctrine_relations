@@ -55,14 +55,14 @@ class QuestionController extends AbstractController
         }
 
         // $answers = $answerRepository->findBy(['question' => $question]);
-        $answers = $question->getAnswers();
+        // $answers = $question->getAnswers();
         // foreach ($answers as $answer) {
         //     dump($answer);
         // }
 
         return $this->render('question/show.html.twig', [
             'question' => $question,
-            'answers' => $answers,
+            // 'answers' => $answers,
         ]);
     }
 
