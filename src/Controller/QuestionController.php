@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Question;
+use App\Repository\AnswerRepository;
 use App\Repository\QuestionRepository;
 use App\Service\MarkdownHelper;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,17 +48,17 @@ class QuestionController extends AbstractController
     /**
      * @Route("/questions/{slug}", name="app_question_show")
      */
-    public function show(Question $question)
+    public function show(Question $question, AnswerRepository $answerRepository)
     {
         if ($this->isDebug) {
             $this->logger->info('We are in debug mode!');
         }
 
-        $answers = [
-            'Make sure your cat is sitting `purrrfectly` still 🤣',
-            'Honestly, I like furry shoes better than MY cat',
-            'Maybe... try saying the spell backwards?',
-        ];
+        // $answers = $answerRepository->findBy(['question' => $question]);
+        $answers = $question->getAnswers();
+        // foreach ($answers as $answer) {
+        //     dump($answer);
+        // }
 
         return $this->render('question/show.html.twig', [
             'question' => $question,
