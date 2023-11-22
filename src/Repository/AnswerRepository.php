@@ -32,7 +32,10 @@ class AnswerRepository extends ServiceEntityRepository
     public function findAllApproved(int $max = 10): array
     {
         return $this->createQueryBuilder('answer')
-            ->addCriteria(self::createApprovedCriteria());
+            ->addCriteria(self::createApprovedCriteria())
+            ->setMaxResults($max)
+            ->getQuery()
+            ->getResult();
     } 
 
     // /**
