@@ -26,6 +26,15 @@ class AnswerRepository extends ServiceEntityRepository
             ->andWhere(Criteria::expr()->eq('status', Answer::STATUS_APPROVED));
     }
 
+    /**
+     * @return Answer[]
+     */
+    public function findAllApproved(int $max = 10): array
+    {
+        return $this->createQueryBuilder('answer')
+            ->addCriteria(self::createApprovedCriteria());
+    } 
+
     // /**
     //  * @return Answer[] Returns an array of Answer objects
     //  */
